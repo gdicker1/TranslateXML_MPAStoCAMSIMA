@@ -15,16 +15,18 @@ def parse_args():
     '''
     Parse input arguments for Registry.xml location and desired output filename
     '''
-    parser = argparse.ArgumentParser(description="Convert namelist options from a MPAS-A Registry.xml to CAM-SIMA namelist_definition.xml.")
+    parser = argparse.ArgumentParser(description="Convert namelist options from a MPAS-A Registry.xml to CAM-SIMA namelist_definition_mpas_dycore.xml.")
 
-    parser.add_argument('registry', help="Path to MPAS-A Registry.xml", type=str)
-    parser.add_argument('output', nargs='?', help="Path to save output to.", type=str,
-                        default=Path(Path.cwd(),"namelist_definition.xml"))
+    def_opath="./namelist_definition_mpas_dycore.xml"
+
+    parser.add_argument('registry', help="Path to MPAS-A Registry.xml. [Required]", type=str)
+    parser.add_argument('output', nargs='?', help=f'Path to save output to. [Optional, Default: "{def_opath}"]', type=str,
+                        default=Path(def_opath))
     opts = parser.parse_args()
     print(f'\tparse_args: opts={opts}')
     print(f'\tparse_args: {Path(opts.registry)}  {Path(opts.output)}')
     sys.stdout.flush()
-    return Path(opts.registry).absolute().resolve(), Path(opts.output).absolute()
+    return Path(opts.registry).absolute().resolve(), Path(opts.output).absolute().resolve()
 
 
 def setup_files(registry_file):
